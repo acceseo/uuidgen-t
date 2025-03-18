@@ -29,3 +29,11 @@ jobs:
           push: ${{ github.ref == 'refs/heads/main' }}
           tags: ${{ secrets.DOCKERHUB_USERNAME }}/uuidgen-t:latest
           platforms: 'amd64,arm64'
+      - if: ${{ github.ref == 'refs/heads/main' }}
+        name: Notify container release
+        uses: SimonScholz/google-chat-action@main
+        with:
+            webhookUrl: '${{ secrets.GOOGLE_CHAT_WEBHOOK_URL }}'
+            title: "🐳📦🔀 ${{ secrets.DOCKERHUB_USERNAME }}/uuidgen-t"
+            subtitle: "Nueva imagen disponible en Docker Hub."
+            createDefaultSection: false
